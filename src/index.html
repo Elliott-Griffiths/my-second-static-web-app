@@ -16,9 +16,18 @@
 
   <script>
     (async function () {
-      const { text } = await (await fetch('/api/message')).json();
-      document.querySelector('#name').textContent = text;
-    }());
+      try {
+        const response = await fetch('/api/message');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const { text } = await response.json();
+        document.querySelector('#name').textContent = text;
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+    })();
+
   </script>
 </body>
 
