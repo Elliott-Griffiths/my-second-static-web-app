@@ -15,28 +15,47 @@
   </main>
 
   <script>
-    console.log('loaded');
-    document.getElementById("sendValueButton").addEventListener("click", function () {
-      const valueToPass = "your_value"; // Replace with the value you want to pass
+    // console.log('loaded');
+    // document.getElementById("sendValueButton").addEventListener("click", function () {
+    //   const valueToPass = "your_value"; // Replace with the value you want to pass
 
-      // Make a POST request to a server that can log the value
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://your-server-url.com/log-value", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
+    //   // Make a POST request to a server that can log the value
+    //   const xhr = new XMLHttpRequest();
+    //   xhr.open("POST", "https://your-server-url.com/log-value", true);
+    //   xhr.setRequestHeader("Content-Type", "application/json");
 
-      const data = JSON.stringify({ value: valueToPass });
+    //   const data = JSON.stringify({ value: valueToPass });
 
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log("Value sent and logged on the server.");
-          } else {
-            console.error("Request failed with status: " + xhr.status);
-          }
+    //   xhr.onreadystatechange = function () {
+    //     if (xhr.readyState === 4) {
+    //       if (xhr.status === 200) {
+    //         console.log("Value sent and logged on the server.");
+    //       } else {
+    //         console.error("Request failed with status: " + xhr.status);
+    //       }
+    //     }
+    //   };
+
+    //   xhr.send(data);
+
+
+    (async function () {
+      try {
+        const response = await fetch('https://kind-pond-0264b7603.4.azurestaticapps.net/api/message', {
+          method: 'GET',
+          // You can include headers or credentials here if needed.
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      };
+        const { text } = await response.json();
+        document.querySelector('#name').textContent = text;
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+    })();
 
-      xhr.send(data);
+
     // (async function () {
     //   try {
     //     const response = await fetch('/api/message');
